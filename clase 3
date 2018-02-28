@@ -1,0 +1,95 @@
+###############la funcion descompose  en R logra obtener los 3 componentes 
+###a traves la funcion calcula el componentes de tendencia utulizando medias 
+#####mA*viles ,la estacijalidad son promedios de los indices de estacionalidad 
+#que se  obtienen al desestacionalizar la serie por el modelo alegido 
+###por ultimo el componente aleatorio se obtiene eliminando la tendencia y
+####estacionalidad de la serie temporal 
+##el otro metodo de descomposoicion es la fucnion stl()que esta basada en la regresion 
+### Loess y consiste una secuencia de dos aplicaciones iteradas 
+#de regresion loess para aplicar este metodo se debe especificar
+####una frecuencia de mesutreo relacionada con el peridodo de la componente estacional 
+####### T - PROMEDIOS MOVILES 
+######3 S- PROMEDIO POR PERIODO 
+####### E- UNA VEZ QUE SE CALCULA T y S SE SUSITUYA PARA ENCONTRR e
+######## Yt=Tt+St+Et
+installed.packages("fpp")##########bajamos la paqueteria 
+installed.packages("forecast")
+
+require(fpp)#####la madamos a llamar 
+require(forecast)
+deso<-read.csv("C://Users//USUARIO//Desktop//deso.csv")
+tsdeso<-ts(deso,frequency = 4,start = 2005)
+tsdeso0<-ts(deso[1:52,],frequency=4,start=2005)##########se declara 
+a0<-descompose(tsdeso0)####descompusimos y pusimos nombre 
+name (a0)######
+a1<-stl(tsdeso0,s.window = 4)####descompsicion 
+name(a1)
+a1$time.series####base de donde se obtiene 
+x11()
+plot(tsdeso0,col(="blue",
+                 main="desocupacion trimestral",ylab="tasa de desocupacion",xlab="años")
+     lines(a1$time.series[,2].col="read",ylab="tendencia"))######tendencia de la serie con el ts
+#######la grafica muestra el componente tendencia en rojo y 
+####los datos originales en azul 
+####la tendencia muestra movimiento sobre toda la serie 
+#####igonrando estacionalidad y pequeñas fluctucaciones aleatorias 
+x11()
+plot(a1)
+######muestra una descomposicion aditiva , el metodo que se uso para descomponer 
+##el sti()
+############################ESTACIONALIDAD#####################
+###ahora para ver la estacionalidad graficamente podemos ver graficas 
+#########estacioales para esto hay una funcion que nos permite ver 
+######lo anterior se utliza la funcion de montohplot()
+x11()
+monthplot(a1$time.series[,"seasonaj"],main"",ylab="seasonal")
+#estacional por cada uno de los peridos 
+####si el componente estacional es elimiadado de la serie de tiempo se le 
+#####llama ajuste estacional para un modelo adotivo 
+############AJUSTE ESTACIONAL (DESTACIONALIZAR)#######
+#PARA HACER UN AJUSTE ESTACIONAL Y Desetacionalizar la serie se utiliza 
+##########la fucnion seasad()
+
+##########si la estacionalidad no es un elmento prioritario de la serie ,
+###entonces eliminar la estacionalidad puede resultar benefico para el analisis
+####por ejemplo , los da6tos de desemplo tienen un ajuste en un periodo 
+######### en consecuencia , los datos de empleo (y muchas otras series economicas)
+##generalmente se ajustan estacionalmente 
+x11()
+plot(tsdeso0,col="brown",main = "tasa de desocupacion",
+     xlab="anios",)
+lines(seasadj(a1),col="black",ylab="ajuste estacional")
+###en esta frafica se puede observar que se mantiene la tendencia sin embargo
+#los picos en peridodos constantes 
+##########Las seriee desestacionalizadas mantiene el componente tendencia y aleatorio 
+####por lo que son series con algunos cambios importantes que resultan confusos 
+####por lo que es importante ser cuidadoso en estos analisis 
+##########EJERCICIO #########
+######ESCOGER una serie de tiempo y realiza lo sog:
+#####1)descompongan la serie de tiempo con la funcion stl y planteen una descomposicion 
+##con uno de los datos que arrojo 
+#########2)grafiquen de esta serie el componente estacional y el componente tendencia 
+######(2graficas)......con estas graficas usar la fucnion lines
+############3)eliminen el componente estacional y graficanlo.........comprueben en una 
+##ecuacion la formula de modelo aditivo eliminando estacionalidad 
+info<-read.csv("C:/Users/USUARIO/Desktop/info.csv")
+tsinfo<-ts(info,frequency = 4,start = 2005)
+tsinfo0<-ts(info[1:52,],frequency=4,start=2005)##########se declara 
+a0<-descompose(tsinfo0)####descompusimos y pusimos nombre 
+name (a0)######
+a1<-stl(tsinfo0,s.window = 4)####descompsicion 
+name(a1)
+a1$time.series####base de donde se obtiene 
+x11()
+plot(tsinfo0,col(="blue",
+                 main="ocupacion en el sector informal trimestral",ylab="tasa de ocupacion en el sectorinformal",
+                 xlab="años")
+     lines(a1$time.series[,2].col="read",ylab="tendencia"))
+x11()
+plot(a1)
+x11()
+monthplot(a1$time.series[,"seasonaj"],main"",ylab="seasonal")
+x11()
+plot(tsdeso0,col="brown",main = "tasa de desocupacion",
+     xlab="anios",)
+lines(seasadj(a1),col="black",ylab="ajuste estacional")
