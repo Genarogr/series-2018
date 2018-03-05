@@ -1,0 +1,68 @@
+###########################################
+#### Examen
+## 1) genera 4 series de tiempo con nombre multiple 1
+# los rangos de estas series son serie 1) de 15 a 35
+# 2) de 100 a 200 . 3) de 29 a 49, 4) 42 a 162
+# Las series deben tener 250 mensuales e inician en el tercer mes del 1990
+## hacer estos datos como data.frame
+# generar cada una de las columnas en series de timepo
+# 1.1) de la serie 1y2 serie de tiempo y dividilas (con funcion en r)
+# en 2 series que vayan de 1990 a 2003 y de 1998 a 2006 y despues graficaquenlas
+# 1.2 )  dividir la serie 3 y 4 a traves de corchetes desde la observacion 150 a la 250
+# 1.2) de 2 series (la que quieran) series obtener y generar 2 data.frame de la tendencia 
+# y la estacionalidad
+##################################################################
+x <- sample(15:35,250, replace=T)
+x
+y <- sample(100:200,250, replace=T)
+z <- sample(29:49,250, replace=T)
+a <- sample(42:162,250, replace=T)
+###################################################
+tsx <- ts(x,frequency = 12, start = 1990)
+tsy <- ts(y,frequency = 12, start = 1990)
+tsz <- ts(z,frequency = 12, start = 1990)
+tsa <- ts(a,frequency = 12, start = 1990)
+#############################################################################
+multiple1<-data.frame(tsx,tsy,tsz,tsa)
+tsmultiple <- ts(multiple1[3:250,],frequency = 12,start = 1990)
+#########################################################
+########################################################
+###########################################################
+installed.packages("fpp")##########bajamos la paqueteria 
+installed.packages("forecast")
+
+require(fpp)#####la madamos a llamar 
+require(forecast)
+tsmultiple
+###############################################################
+## dividir la serie
+div1<- window(tsmultiple[,1], start = 1990, end = 2003)
+div2 <- window(tsmultiple[,2], start = 1998, end = 2006)
+x11()
+plot(div1)
+plot(div2)
+################################################################
+tsmultiple1 <- ts(multiple1[,3],frequency = 12,start = 1990)[150:250]
+View(tsmultiple1)
+tsmultiple2 <- ts(multiple1[,4],frequency = 12,start = 1990)[150:250]
+View(tsmultiple)
+
+desc1 <- decompose(s2)
+
+
+s2 <- ts(z[150:250],frequency = 12,start = 1990)
+desc1 <- decompose(s2)
+base1 <- data.frame(desc1$seasonal,desc1$trend)
+frd1<- stl(s2, s.window = 12)
+
+bas2 <- frd1$time.series
+######################################################################
+
+
+
+
+
+
+plot(div2,col="brown",main = "",
+     xlab="anios")
+lines(seasadj(a1),col="black",ylab="ajuste estacional")
