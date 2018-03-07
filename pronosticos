@@ -1,0 +1,75 @@
+######### hacer pronosticos
+### metodos lineales para pronosticar ####
+## son la aplicacion de pronostico lineales como los 4 metodos
+# de la media
+# el ingenuo
+# el ingenuo estacional
+# y el de deriva el pronostico
+################################################
+######### -------------> ingenuo
+# esta basdao en la ultima observacion que arroja la serie de tiempo
+# es decir este pronostico asume que la observacion mas importante es la ultima
+## FUNCION EN R ---> naive(serie,h=num pronosticos)
+# donde h es el numero de pronosticos que requiero
+########################################################
+### -------------------> metodo de la media
+# este metodo le da el mismo peso a todos los datos u observaciones,
+# se asume con este metodo que todas las observaciones
+# tienen la misma importancia por lo que el pronostico es un promedio de todas las observaciones
+## promedio de las observaciones
+## FUNCION EN R -----------> meanf(serie, h= numero de pronosticos)
+#####################################################################
+#### -----------------> ingenuo estacional
+# este metodo se utiliza en ST con alta estacionalidad este proceso consiste
+# en darle el mayor peso a la mayor ponderacion al dato
+# del mismo periodo en el año anterios 
+#por ejemplo :
+# trimestre 2 del año 2005 es igual al trimeste 2 del año 2006
+#### FUNCION EN R -----------> snaive(serie,h=numero de pronosticos)
+######################################################################
+#### -------------------------> metodo de la deriva
+# este metodo consiste en que el pronostico puede incrementar o reducirse sobre el tiempo
+# dependiendo de los cambios historicos de la ST
+## FUNCION EN R ----------> rwf(serie,h=num de pronostico, drift=TRUE)
+### para que reconosca el petodo de la deriva drift=TRUE
+########################################################################
+#### EJERCICIO PIB
+deso <- read.csv("C:/Users/USUARIO/Documents/g/tasa.csv")
+dests <- ts(deso,start=2005,frequency=4)
+install.packages("fpp")
+require(fpp)
+dests
+desocmod1 <- meanf(dests,h=10)
+desocmod2 <- naive(dests,h=10)
+desocmod3 <- snaive(dests,h=10)
+desocmod4 <- rwf(dests,h=10,drift = TRUE)
+x11()
+plot(desocmod1,main = "Tasa de desocupacion trimestral",col = "green")
+lines(desocmod1$mean,col="green")##media
+lines(desocmod2$mean,col="black")# tom
+lines(desocmod3$mean,col="pink")
+lines(desocmod4$mean,col="orange")# con tendencia a reducirse 
+legend("topleft",lty = 1,col=c("green","black","pink"),
+legend=c("media","ingenuu","ingenuo estacional","deriva"))
+### la grafica muestra la ST es este caso colo verde 
+## nos muestra los pronosticos los cuadritos muestran el area de los pronosticos
+## mean genera los pronosticos
+## fitted valor estimado de la ST con valores ajustados
+## esperamos que los datos ajustados sean cercanos a nuestros datos reales
+
+##
+x11()
+plot(desocmod1,main = "Tasa de desocupacion trimestral",col = "green")
+lines(desocmod1$fitted,col="green")##media
+lines(desocmod2$fitted,col="black")# tom
+lines(desocmod3$fitted,col="pink")
+lines(desocmod4$fitted,col="orange")# con tendencia a reducirse 
+legend("topleft",lty = 1,col=c(5,6,7,8),
+legend=c("media","ingenuu","ingenuo estacional","deriva"))
+names(desocmod1)
+##################### Ejercicio con una serie de tiempo
+# apliquen los 4 metodos de pronosticos y grafiquenlos
+# segun las graficas elijan que metodos es el mejor para pronosticar
+# tambien grafiquen los datos ajustados y planteen segun su grafica cual es el metodo
+# que mejor ajusta a los datos reales
+## del 7/03/2017 al 2018 diario por un año de banamex
