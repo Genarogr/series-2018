@@ -1,0 +1,37 @@
+#### Tarea
+deso <- read.csv("C:/Users/genar/Desktop/Programa R/series/banamex.csv")[-1]
+deso
+dests <- ts(deso,start=2017,frequency=365)
+install.packages("fpp")
+require(fpp)
+dests
+desocmod1 <- meanf(dests,h=10)
+desocmod2 <- naive(dests,h=10)
+desocmod3 <- snaive(dests,h=10)
+desocmod4 <- rwf(dests,h=10,drift = TRUE)
+x11()
+plot(desocmod1,main = "Precio cierre",col = "green")
+lines(desocmod1$mean,col="green")##media
+lines(desocmod2$mean,col="black")# tom
+lines(desocmod3$mean,col="pink")
+lines(desocmod4$mean,col="red")# con tendencia a reducirse 
+legend("topleft",lty = 1,col=c("green","black","pink","red"),
+       legend=c("media","ingenuu","ingenuo estacional","deriva"))
+### la grafica muestra la ST es este caso colo verde 
+## nos muestra los pronosticos los cuadritos muestran el area de los pronosticos
+## mean genera los pronosticos
+## fitted valor estimado de la ST con valores ajustados
+## esperamos que los datos ajustados sean cercanos a nuestros datos reales
+
+##
+x11()
+plot(desocmod1,main = "Precio cierre",col = "green")
+lines(desocmod1$fitted,col="green")##media
+lines(desocmod2$fitted,col="black")# tom
+lines(desocmod3$fitted,col="red")
+lines(desocmod4$fitted,col="orange")# con tendencia a reducirse 
+legend("topleft",lty = 1,col=c(5,6,7,8),
+       legend=c("media","ingenuu","ingenuo estacional","deriva"))
+names(desocmod1)
+## el mejor pronostico es el que muestra el ingenuo estacional ya que es un pronostico que sigue mas la tendencia del precio
+# de la accion
