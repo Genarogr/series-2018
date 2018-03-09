@@ -1,14 +1,14 @@
 #### Tarea
 deso <- read.csv("C:/Users/genar/Desktop/Programa R/series/banamex.csv")[-1]
 deso
-dests <- ts(deso,start=2017,frequency=365)
+dests <- ts(deso,start=2017,frequency=254)
 install.packages("fpp")
 require(fpp)
 dests
-desocmod1 <- meanf(dests,h=10)
-desocmod2 <- naive(dests,h=10)
-desocmod3 <- snaive(dests,h=10)
-desocmod4 <- rwf(dests,h=10,drift = TRUE)
+desocmod1 <- meanf(dests,h=254)
+desocmod2 <- naive(dests,h=254)
+desocmod3 <- snaive(dests,h=254)
+desocmod4 <- rwf(dests,h=254,drift = TRUE)
 x11()
 plot(desocmod1,main = "Precio cierre",col = "green")
 lines(desocmod1$mean,col="green")##media
