@@ -1,0 +1,13 @@
+
+sede <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt417.dbf")
+View(sede)
+mex <- subset(sede,ENT== "15" )
+View(mex)
+
+
+e <- subset(mex,CLASE1== "1")
+ ### 7878 personas PEA
+f<-subset(mex,CLASE2== "2")
+### 306 desocupados
+indice <- (306/7878)*100
+### indice ultimo trimestre 2017 es de 3.884235
