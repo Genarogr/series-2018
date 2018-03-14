@@ -1,0 +1,44 @@
+acci<-read.csv("C:/Users/USUARIO/Documents/accidentes.csv")
+View(acci)
+x <-rbind(acci)[6:17,-1]######
+#View(x)
+#acci<-acci[-1,]
+#acci<-acci[,-1]
+#acci<-acci[,-4]
+#View()
+trs<-t(t(x))
+ctrs<-c(trs)
+
+cctss<-ts(ctrs,frequency = 12,start = 1997)
+
+View(cctss)
+cctss
+memory.size(200000)
+install.packages("fpp")
+require(fpp)
+#### 
+#SES en R
+# debemos proponer valores para alpha
+# sabemos que 0<= alpha<= 1
+### Suavizado exponencial Simple(SES)
+x11()
+plot(cctss)
+mod <- ses(cctss,alpha = .1, h=12)
+mod2 <- ses(cctss,alpha = .5, h=12)
+mod3 <- ses(cctss,alpha = .9, h=12)
+names(mod)
+## elemento mean da el pronostico
+# elemento del ajuste fitted
+
+x11()
+plot(mod, ylab = "accidentes",xlab = "año",main = "numero de accidentes",type = "o")
+lines(mod$mean,col="green",type="o")
+lines(mod2$mean,col="pink",type="o")
+lines(mod3$mean,col="orange",type="o")
+legend("topleft",lty = 1,col = c("black","green","pink","orange"),
+       c("datos originales",expression(alpha==.1),
+       expression(alpha==.5),expression(alpha==.9)),
+       pch=5)
+### pch cambia los circulos de la legenda
+### lty cambia las lineas de la legenda
+
