@@ -1,0 +1,531 @@
+##------------------La Tasa de Desocupación (TD)--------------------- 
+#que se refiere al porcentaje 
+#de la Población Económicamente Activa (PEA)
+#que no trabajó siquiera una hora durante la semana de referencia
+#de la encuesta pero manifestó su disposición para hacerlo e hizo
+#alguna actividad por obtener empleo
+
+#--------------La Tasa de Trabajo Asalariado----------------
+#representa a la población
+#que percibe de la unidad económica para la que trabaja un sueldo,
+#salario o jornal, por las actividades realizadas. 
+
+~#Tasas relacionadas con la informalidad 
+  #------------La Tasa de Informalidad Laboral 1 (TIL1)-------------------
+#, se refiere a la suma, sin duplicar, de los que son laboralmente vulnerables
+#por la naturaleza de la unidad económica para la que trabajan,
+#con aquellos cuyo vínculo o dependencia laboral no es reconocido por su
+#fuente de trabajo. Así, en esta tasa se incluye -además del 
+#componente que labora en micronegocios no registrados o sector informal
+#a otras modalidades análogas como los ocupados por cuenta propia
+#en la agricultura de subsistencia, así como a trabajadores que laboran
+#sin la protección de la seguridad social y cuyos servicios son utilizados
+#por unidades económicas registradas. 
+require(foreign)
+sede <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt105.dbf")
+sede1 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt205.dbf")
+sede2 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt305.dbf")
+sede3 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt405.dbf")
+sede4 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt106.dbf")
+sede5 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt206.dbf")
+sede6 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt306.dbf")
+sede7 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt406.dbf")
+sede8 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt107.dbf")
+sede9 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt207.dbf")
+sede10 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt307.dbf")
+sede11 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt407.dbf")
+sede12 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt108.dbf")
+sede13 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt208.dbf")
+sede14 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt308.dbf")
+sede15 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt408.dbf")
+sede16 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt109.dbf")
+sede17 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt209.dbf")
+sede18 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt309.dbf")
+sede19 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt409.dbf")
+sede20 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt110.dbf")
+sede21 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt210.dbf")
+sede22 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt310.dbf")
+sede23 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt410.dbf")
+sede24 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt111.dbf")
+sede25 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt211.dbf")
+sede26 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt311.dbf")
+sede27 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt411.dbf")
+sede28 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt112.dbf")
+sede29 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt212.dbf")
+sede30 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt312.dbf")
+sede31 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt412.dbf")
+sede32 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt113.dbf")
+sede33 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt213.dbf")
+sede34 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt313.dbf")
+sede35 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt413.dbf")
+sede36 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt114.dbf")
+sede37 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt214.dbf")
+sede38 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt314.dbf")
+sede39 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt414.dbf")
+sede40 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/SDEMT115.dbf")
+sede41 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/SDEMT215.dbf")
+sede42 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt315.dbf")
+sede43 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt415.dbf")
+sede44 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt116.dbf")
+sede45 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt216.dbf")
+sede46 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt316.dbf")
+sede47 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt416.dbf")
+sede48 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt117.dbf")
+sede49 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt217.dbf")
+sede50 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt217.dbf")
+sede51 <-read.dbf("C:/Users/genar/Desktop/Programa R/series/sdemt217.dbf")
+###############################################################################################
+tr<- subset(sede, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr1<- subset(sede1, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr2<- subset(sede2, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr3<- subset(sede3, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr4<- subset(sede4, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr5<- subset(sede5, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr6<- subset(sede6, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr7<- subset(sede7, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr8<- subset(sede8, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr9<- subset(sede9, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr10<- subset(sede10, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr11<- subset(sede11, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr12<- subset(sede12, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr13<- subset(sede13, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr14<- subset(sede14, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr15<- subset(sede15, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr16<- subset(sede16, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr17<- subset(sede17, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr18<- subset(sede18, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr19<- subset(sede19, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr20<- subset(sede20, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr21<- subset(sede21, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr22<- subset(sede22, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr23<- subset(sede23, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr24<- subset(sede24, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr25<- subset(sede25, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr26<- subset(sede26, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr27<- subset(sede27, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr28<- subset(sede28, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr29<- subset(sede29, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr30<- subset(sede30, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr31<- subset(sede31, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr32<- subset(sede32, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr33<- subset(sede33, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr34<- subset(sede34, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr35<- subset(sede35, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr36<- subset(sede36, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr37<- subset(sede37, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr38<- subset(sede38, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr39<- subset(sede39, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr40<- subset(sede40, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr41<- subset(sede41, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr42<- subset(sede42, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr43<- subset(sede43, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr44<- subset(sede44, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr45<- subset(sede45, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr46<- subset(sede46, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr47<- subset(sede47, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr48<- subset(sede48, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr49<- subset(sede49, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr50<- subset(sede50, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+tr51<- subset(sede51, ENT== 15 & R_DEF==0 & C_RES==1 | C_RES==3)
+
+
+
+#######################################################################
+pea<-subset(sede,CLASE1== "1")
+pea1<-subset(sede1,CLASE1== "1")
+pea2<-subset(sede2,CLASE1== "1")
+pea3<-subset(sede3,CLASE1== "1")
+pea4<-subset(sede4,CLASE1== "1")
+pea5<-subset(sede5,CLASE1== "1")
+pea6<-subset(sede6,CLASE1== "1")
+pea7<-subset(sede7,CLASE1== "1")
+pea8<-subset(sede8,CLASE1== "1")
+pea9<-subset(sede9,CLASE1== "1")
+pea10<-subset(sede10,CLASE1== "1")
+pea11<-subset(sede11,CLASE1== "1")
+pea12<-subset(sede12,CLASE1== "1")
+pea13<-subset(sede13,CLASE1== "1")
+pea14<-subset(sede14,CLASE1== "1")
+pea15<-subset(sede15,CLASE1== "1")
+pea16<-subset(sede16,CLASE1== "1")
+pea17<-subset(sede17,CLASE1== "1")
+pea18<-subset(sede18,CLASE1== "1")
+pea19<-subset(sede19,CLASE1== "1")
+pea20<-subset(sede20,CLASE1== "1")
+pea21<-subset(sede21,CLASE1== "1")
+pea22<-subset(sede22,CLASE1== "1")
+pea23<-subset(sede23,CLASE1== "1")
+pea24<-subset(sede24,CLASE1== "1")
+pea25<-subset(sede25,CLASE1== "1")
+pea26<-subset(sede26,CLASE1== "1")
+pea27<-subset(sede27,CLASE1== "1")
+pea28<-subset(sede28,CLASE1== "1")
+pea29<-subset(sede29,CLASE1== "1")
+pea30<-subset(sede30,CLASE1== "1")
+pea31<-subset(sede31,CLASE1== "1")
+pea32<-subset(sede32,CLASE1== "1")
+pea33<-subset(sede33,CLASE1== "1")
+pea34<-subset(sede34,CLASE1== "1")
+pea35<-subset(sede35,CLASE1== "1")
+pea36<-subset(sede36,CLASE1== "1")
+pea37<-subset(sede37,CLASE1== "1")
+pea38<-subset(sede38,CLASE1== "1")
+pea39<-subset(sede39,CLASE1== "1")
+pea40<-subset(sede40,CLASE1== "1")
+pea41<-subset(sede41,CLASE1== "1")
+pea42<-subset(sede42,CLASE1== "1")
+pea43<-subset(sede43,CLASE1== "1")
+pea44<-subset(sede44,CLASE1== "1")
+pea45<-subset(sede45,CLASE1== "1")
+pea46<-subset(sede46,CLASE1== "1")
+pea47<-subset(sede47,CLASE1== "1")
+pea48<-subset(sede48,CLASE1== "1")
+pea49<-subset(sede49,CLASE1== "1")
+pea50<-subset(sede50,CLASE1== "1")
+pea51<-subset(sede51,CLASE1== "1")
+
+
+
+##############################################################################
+des<-subset(sede,CLASE2== "2")
+des1<-subset(sede1,CLASE2== "2")
+des2<-subset(sede2,CLASE2== "2")
+des3<-subset(sede3,CLASE2== "2")
+des4<-subset(sede4,CLASE2== "2")
+des5<-subset(sede5,CLASE2== "2")
+des6<-subset(sede6,CLASE2== "2")
+des7<-subset(sede7,CLASE2== "2")
+des8<-subset(sede8,CLASE2== "2")
+des9<-subset(sede9,CLASE2== "2")
+des10<-subset(sede10,CLASE2== "2")
+des11<-subset(sede11,CLASE2== "2")
+des12<-subset(sede12,CLASE2== "2")
+des13<-subset(sede13,CLASE2== "2")
+des14<-subset(sede14,CLASE2== "2")
+des15<-subset(sede15,CLASE2== "2")
+des16<-subset(sede16,CLASE2== "2")
+des17<-subset(sede17,CLASE2== "2")
+des18<-subset(sede18,CLASE2== "2")
+des19<-subset(sede19,CLASE2== "2")
+des20<-subset(sede10,CLASE2== "2")
+des21<-subset(sede11,CLASE2== "2")
+des22<-subset(sede12,CLASE2== "2")
+des23<-subset(sede13,CLASE2== "2")
+des24<-subset(sede14,CLASE2== "2")
+des25<-subset(sede15,CLASE2== "2")
+des26<-subset(sede16,CLASE2== "2")
+des27<-subset(sede17,CLASE2== "2")
+des28<-subset(sede18,CLASE2== "2")
+des29<-subset(sede19,CLASE2== "2")
+des30<-subset(sede10,CLASE2== "2")
+des31<-subset(sede11,CLASE2== "2")
+des32<-subset(sede12,CLASE2== "2")
+des33<-subset(sede13,CLASE2== "2")
+des34<-subset(sede14,CLASE2== "2")
+des35<-subset(sede15,CLASE2== "2")
+des36<-subset(sede16,CLASE2== "2")
+des37<-subset(sede17,CLASE2== "2")
+des38<-subset(sede18,CLASE2== "2")
+des39<-subset(sede19,CLASE2== "2")
+des40<-subset(sede10,CLASE2== "2")
+des41<-subset(sede11,CLASE2== "2")
+des42<-subset(sede12,CLASE2== "2")
+des43<-subset(sede13,CLASE2== "2")
+des44<-subset(sede14,CLASE2== "2")
+des45<-subset(sede15,CLASE2== "2")
+des46<-subset(sede16,CLASE2== "2")
+des47<-subset(sede17,CLASE2== "2")
+des48<-subset(sede18,CLASE2== "2")
+des49<-subset(sede19,CLASE2== "2")
+des50<-subset(sede10,CLASE2== "2")
+des51<-subset(sede11,CLASE2== "2")
+#############################################################################3
+
+tasa <- (length(t(des)[1,])/length(t(pea)[1,]))*100
+tasa1 <- (length(t(des1)[1,])/length(t(pea1)[1,]))*100
+tasa2 <- (length(t(des2)[1,])/length(t(pea2)[1,]))*100
+tasa3 <- (length(t(des3)[1,])/length(t(pea3)[1,]))*100
+tasa4 <- (length(t(des4)[1,])/length(t(pea4)[1,]))*100
+tasa5 <- (length(t(des5)[1,])/length(t(pea5)[1,]))*100
+tasa6 <- (length(t(des6)[1,])/length(t(pea6)[1,]))*100
+tasa7 <- (length(t(des7)[1,])/length(t(pea7)[1,]))*100
+tasa8 <- (length(t(des8)[1,])/length(t(pea8)[1,]))*100
+tasa9 <- (length(t(des9)[1,])/length(t(pea9)[1,]))*100
+tasa10 <- (length(t(des10)[1,])/length(t(pea10)[1,]))*100
+tasa11 <- (length(t(des11)[1,])/length(t(pea11)[1,]))*100
+tasa12 <- (length(t(des12)[1,])/length(t(pea12)[1,]))*100
+tasa13 <- (length(t(des13)[1,])/length(t(pea13)[1,]))*100
+tasa14 <- (length(t(des14)[1,])/length(t(pea14)[1,]))*100
+tasa15 <- (length(t(des15)[1,])/length(t(pea15)[1,]))*100
+tasa16 <- (length(t(des16)[1,])/length(t(pea16)[1,]))*100
+tasa17 <- (length(t(des17)[1,])/length(t(pea17)[1,]))*100
+tasa18 <- (length(t(des18)[1,])/length(t(pea18)[1,]))*100
+tasa19 <- (length(t(des19)[1,])/length(t(pea19)[1,]))*100
+tasa20 <- (length(t(des20)[1,])/length(t(pea20)[1,]))*100
+tasa21 <- (length(t(des21)[1,])/length(t(pea21)[1,]))*100
+tasa22 <- (length(t(des22)[1,])/length(t(pea22)[1,]))*100
+tasa23 <- (length(t(des23)[1,])/length(t(pea23)[1,]))*100
+tasa24 <- (length(t(des24)[1,])/length(t(pea24)[1,]))*100
+tasa25 <- (length(t(des25)[1,])/length(t(pea25)[1,]))*100
+tasa26 <- (length(t(des26)[1,])/length(t(pea26)[1,]))*100
+tasa27 <- (length(t(des27)[1,])/length(t(pea27)[1,]))*100
+tasa28 <- (length(t(des28)[1,])/length(t(pea28)[1,]))*100
+tasa29 <- (length(t(des29)[1,])/length(t(pea29)[1,]))*100
+tasa30 <- (length(t(des30)[1,])/length(t(pea30)[1,]))*100
+tasa31 <- (length(t(des31)[1,])/length(t(pea31)[1,]))*100
+tasa32 <- (length(t(des32)[1,])/length(t(pea32)[1,]))*100
+tasa33 <- (length(t(des33)[1,])/length(t(pea33)[1,]))*100
+tasa34 <- (length(t(des34)[1,])/length(t(pea34)[1,]))*100
+tasa35 <- (length(t(des35)[1,])/length(t(pea35)[1,]))*100
+tasa36 <- (length(t(des36)[1,])/length(t(pea36)[1,]))*100
+tasa37 <- (length(t(des37)[1,])/length(t(pea37)[1,]))*100
+tasa38 <- (length(t(des38)[1,])/length(t(pea38)[1,]))*100
+tasa39 <- (length(t(des39)[1,])/length(t(pea39)[1,]))*100
+tasa40 <- (length(t(des40)[1,])/length(t(pea40)[1,]))*100
+tasa41 <- (length(t(des41)[1,])/length(t(pea41)[1,]))*100
+tasa42 <- (length(t(des42)[1,])/length(t(pea42)[1,]))*100
+tasa43 <- (length(t(des43)[1,])/length(t(pea43)[1,]))*100
+tasa44 <- (length(t(des44)[1,])/length(t(pea44)[1,]))*100
+tasa45 <- (length(t(des45)[1,])/length(t(pea45)[1,]))*100
+tasa46 <- (length(t(des46)[1,])/length(t(pea46)[1,]))*100
+tasa47 <- (length(t(des47)[1,])/length(t(pea47)[1,]))*100
+tasa48 <- (length(t(des48)[1,])/length(t(pea48)[1,]))*100
+tasa49 <- (length(t(des49)[1,])/length(t(pea49)[1,]))*100
+tasa50 <- (length(t(des50)[1,])/length(t(pea50)[1,]))*100
+tasa51 <- (length(t(des51)[1,])/length(t(pea51)[1,]))*100
+##################################################################################3
+serie <- data.frame(tasa,tasa1,tasa2,tasa3,tasa4,tasa5,tasa6,tasa7,tasa8,tasa9,
+                    tasa10,tasa11,tasa12,tasa13,tasa14,tasa15,tasa16,tasa17,tasa18,tasa19,
+                    tasa20,tasa21,tasa22,tasa23,tasa24,tasa25,tasa26,tasa27,tasa28,tasa29,
+                    tasa30,tasa31,tasa32,tasa33,tasa34,tasa35,tasa36,tasa37,tasa38,tasa39,
+                    tasa40,tasa41,tasa42,tasa43,tasa44,tasa45,tasa46,tasa47,tasa48,tasa49,
+                    tasa50,tasa51)
+########################################################################################
+#asalariados
+asa<- subset(sede,REMUNE2C==2)
+asa1<- subset(sede1,REMUNE2C==2)
+asa2<- subset(sede2,REMUNE2C==2)
+asa3<- subset(sede3,REMUNE2C==2)
+asa4<- subset(sede4,REMUNE2C==2)
+asa5<- subset(sede5,REMUNE2C==2)
+asa6<- subset(sede6,REMUNE2C==2)
+asa7<- subset(sede7,REMUNE2C==2)
+asa8<- subset(sede8,REMUNE2C==2)
+asa9<- subset(sede9,REMUNE2C==2)
+asa10<- subset(sede10,REMUNE2C==2)
+asa11<- subset(sede11,REMUNE2C==2)
+asa12<- subset(sede12,REMUNE2C==2)
+asa13<- subset(sede13,REMUNE2C==2)
+asa14<- subset(sede14,REMUNE2C==2)
+asa15<- subset(sede15,REMUNE2C==2)
+asa16<- subset(sede16,REMUNE2C==2)
+asa17<- subset(sede17,REMUNE2C==2)
+asa18<- subset(sede18,REMUNE2C==2)
+asa19<- subset(sede19,REMUNE2C==2)
+asa20<- subset(sede20,REMUNE2C==2)
+asa21<- subset(sede21,REMUNE2C==2)
+asa22<- subset(sede22,REMUNE2C==2)
+asa23<- subset(sede23,REMUNE2C==2)
+asa24<- subset(sede24,REMUNE2C==2)
+asa25<- subset(sede25,REMUNE2C==2)
+asa26<- subset(sede26,REMUNE2C==2)
+asa27<- subset(sede27,REMUNE2C==2)
+asa28<- subset(sede28,REMUNE2C==2)
+asa29<- subset(sede29,REMUNE2C==2)
+asa30<- subset(sede30,REMUNE2C==2)
+asa31<- subset(sede31,REMUNE2C==2)
+asa32<- subset(sede32,REMUNE2C==2)
+asa33<- subset(sede33,REMUNE2C==2)
+asa34<- subset(sede34,REMUNE2C==2)
+asa35<- subset(sede35,REMUNE2C==2)
+asa36<- subset(sede36,REMUNE2C==2)
+asa37<- subset(sede37,REMUNE2C==2)
+asa38<- subset(sede38,REMUNE2C==2)
+asa39<- subset(sede39,REMUNE2C==2)
+asa40<- subset(sede40,REMUNE2C==2)
+asa41<- subset(sede41,REMUNE2C==2)
+asa42<- subset(sede42,REMUNE2C==2)
+asa43<- subset(sede43,REMUNE2C==2)
+asa44<- subset(sede44,REMUNE2C==2)
+asa45<- subset(sede45,REMUNE2C==2)
+asa46<- subset(sede46,REMUNE2C==2)
+asa47<- subset(sede47,REMUNE2C==2)
+asa48<- subset(sede48,REMUNE2C==2)
+asa49<- subset(sede49,REMUNE2C==2)
+asa50<- subset(sede50,REMUNE2C==2)
+asa51<- subset(sede51,REMUNE2C==2)
+###############################################################################################
+tasaasa <- (length(t(asa)[1,])/length(t(pea)[1,]))*100
+tasaasa1 <- (length(t(asa1)[1,])/length(t(pea1)[1,]))*100
+tasaasa2 <- (length(t(asa2)[1,])/length(t(pea2)[1,]))*100
+tasaasa3 <- (length(t(asa3)[1,])/length(t(pea3)[1,]))*100
+tasaasa4 <- (length(t(asa4)[1,])/length(t(pea4)[1,]))*100
+tasaasa5<-  (length(t(asa5)[1,])/length(t(pea5)[1,]))*100
+tasaasa6 <- (length(t(asa6)[1,])/length(t(pea6)[1,]))*100
+tasaasa7 <- (length(t(asa7)[1,])/length(t(pea7)[1,]))*100
+tasaasa8<-  (length(t(asa8)[1,])/length(t(pea8)[1,]))*100
+tasaasa9 <- (length(t(asa9)[1,])/length(t(pea9)[1,]))*100
+tasaasa10 <- (length(t(asa10)[1,])/length(t(pea10)[1,]))*100
+tasaasa11 <- (length(t(asa11)[1,])/length(t(pea11)[1,]))*100
+tasaasa12 <- (length(t(asa12)[1,])/length(t(pea12)[1,]))*100
+tasaasa13<-  (length(t(asa13)[1,])/length(t(pea13)[1,]))*100
+tasaasa14 <- (length(t(asa14)[1,])/length(t(pea14)[1,]))*100
+tasaasa15 <- (length(t(asa15)[1,])/length(t(pea15)[1,]))*100
+tasaasa16 <- (length(t(asa16)[1,])/length(t(pea16)[1,]))*100
+tasaasa17 <- (length(t(asa17)[1,])/length(t(pea17)[1,]))*100
+tasaasa18<-  (length(t(asa18)[1,])/length(t(pea18)[1,]))*100
+tasaasa19 <- (length(t(asa19)[1,])/length(t(pea19)[1,]))*100
+tasaasa20 <- (length(t(asa20)[1,])/length(t(pea20)[1,]))*100
+tasaasa21 <- (length(t(asa21)[1,])/length(t(pea21)[1,]))*100
+tasaasa22 <- (length(t(asa22)[1,])/length(t(pea22)[1,]))*100
+tasaasa23<-  (length(t(asa23)[1,])/length(t(pea23)[1,]))*100
+tasaasa24 <- (length(t(asa24)[1,])/length(t(pea24)[1,]))*100
+tasaasa25 <- (length(t(asa25)[1,])/length(t(pea25)[1,]))*100
+tasaasa26 <- (length(t(asa26)[1,])/length(t(pea26)[1,]))*100
+tasaasa27 <- (length(t(asa27)[1,])/length(t(pea27)[1,]))*100
+tasaasa28<-  (length(t(asa28)[1,])/length(t(pea28)[1,]))*100
+tasaasa29 <- (length(t(asa29)[1,])/length(t(pea29)[1,]))*100
+tasaasa30 <- (length(t(asa30)[1,])/length(t(pea30)[1,]))*100
+tasaasa31 <- (length(t(asa31)[1,])/length(t(pea31)[1,]))*100
+tasaasa32 <- (length(t(asa32)[1,])/length(t(pea32)[1,]))*100
+tasaasa33<-  (length(t(asa33)[1,])/length(t(pea33)[1,]))*100
+tasaasa34 <- (length(t(asa34)[1,])/length(t(pea34)[1,]))*100
+tasaasa35 <- (length(t(asa35)[1,])/length(t(pea35)[1,]))*100
+tasaasa36 <- (length(t(asa36)[1,])/length(t(pea36)[1,]))*100
+tasaasa37 <- (length(t(asa37)[1,])/length(t(pea37)[1,]))*100
+tasaasa38<-  (length(t(asa38)[1,])/length(t(pea38)[1,]))*100
+tasaasa39 <- (length(t(asa39)[1,])/length(t(pea39)[1,]))*100
+tasaasa40 <- (length(t(asa40)[1,])/length(t(pea40)[1,]))*100
+tasaasa41 <- (length(t(asa41)[1,])/length(t(pea41)[1,]))*100
+tasaasa42 <- (length(t(asa42)[1,])/length(t(pea42)[1,]))*100
+tasaasa43<-  (length(t(asa43)[1,])/length(t(pea43)[1,]))*100
+tasaasa44 <- (length(t(asa44)[1,])/length(t(pea44)[1,]))*100
+tasaasa45 <- (length(t(asa45)[1,])/length(t(pea45)[1,]))*100
+tasaasa46 <- (length(t(asa46)[1,])/length(t(pea46)[1,]))*100
+tasaasa47 <- (length(t(asa47)[1,])/length(t(pea47)[1,]))*100
+tasaasa48<-  (length(t(asa48)[1,])/length(t(pea48)[1,]))*100
+tasaasa49 <- (length(t(asa49)[1,])/length(t(pea49)[1,]))*100
+tasaasa50 <- (length(t(asa50)[1,])/length(t(pea50)[1,]))*100
+tasaasa51 <- (length(t(asa51)[1,])/length(t(pea51)[1,]))*100
+serieass<- data.frame(tasaasa,tasaasa1,tasaasa2,tasaasa3,tasaasa4,tasaasa5,tasaasa6,tasaasa7,tasaasa8,tasaasa9
+                      tasaasa10,tasaasa11,tasaasa12,tasaasa13,tasaasa14,tasaasa15,tasaasa16,tasaasa17,tasaasa18,tasaasa19,
+                      tasaasa20,tasaasa21,tasaasa22,tasaasa23,tasaasa24,tasaasa25,tasaasa26,tasaasa27,tasaasa28,tasaasa29,
+                      tasaasa30,tasaasa31,tasaasa32,tasaasa33,tasaasa34,tasaasa35,tasaasa36,tasaasa37,tasaasa38,tasaasa39,
+                      tasaasa40,tasaasa41,tasaasa42,tasaasa43,tasaasa44,tasaasa45,tasaasa46,tasaasa47,tasaasa48,tasaasa49,
+                      tasaasa50,tasaasa51)
+##############################################################################################
+#
+#TIL1
+t1 <- subset(sede1,EMP_PPAL==1)
+t <- subset(sede,EMP_PPAL==1)
+t2 <- subset(sede2,EMP_PPAL==1)
+t3 <- subset(sede3,EMP_PPAL==1)
+t4 <- subset(sede4,EMP_PPAL==1)
+t5 <- subset(sede5,EMP_PPAL==1)
+t6 <- subset(sede6,EMP_PPAL==1)
+t7 <- subset(sede7,EMP_PPAL==1)
+t8 <- subset(sede8,EMP_PPAL==1)
+t9 <- subset(sede9,EMP_PPAL==1)
+t10 <- subset(sede10,EMP_PPAL==1)
+t11 <- subset(sede11,EMP_PPAL==1)
+t12 <- subset(sede12,EMP_PPAL==1)
+t13 <- subset(sede13,EMP_PPAL==1)
+t14 <- subset(sede14,EMP_PPAL==1)
+t15 <- subset(sede15,EMP_PPAL==1)
+t16 <- subset(sede16,EMP_PPAL==1)
+t17 <- subset(sede17,EMP_PPAL==1)
+t18 <- subset(sede18,EMP_PPAL==1)
+t19 <- subset(sede19,EMP_PPAL==1)
+t20 <- subset(sede20,EMP_PPAL==1)
+t21 <- subset(sede21,EMP_PPAL==1)
+t22 <- subset(sede22,EMP_PPAL==1)
+t23 <- subset(sede23,EMP_PPAL==1)
+t24 <- subset(sede24,EMP_PPAL==1)
+t25 <- subset(sede25,EMP_PPAL==1)
+t26 <- subset(sede26,EMP_PPAL==1)
+t27 <- subset(sede27,EMP_PPAL==1)
+t28 <- subset(sede28,EMP_PPAL==1)
+t29 <- subset(sede29,EMP_PPAL==1)
+t30 <- subset(sede30,EMP_PPAL==1)
+t31 <- subset(sede31,EMP_PPAL==1)
+t32 <- subset(sede32,EMP_PPAL==1)
+t33 <- subset(sede33,EMP_PPAL==1)
+t34 <- subset(sede34,EMP_PPAL==1)
+t35 <- subset(sede35,EMP_PPAL==1)
+t36 <- subset(sede36,EMP_PPAL==1)
+t37 <- subset(sede37,EMP_PPAL==1)
+t38 <- subset(sede38,EMP_PPAL==1)
+t39 <- subset(sede39,EMP_PPAL==1)
+t40 <- subset(sede40,EMP_PPAL==1)
+t41 <- subset(sede41,EMP_PPAL==1)
+t42 <- subset(sede42,EMP_PPAL==1)
+t43 <- subset(sede43,EMP_PPAL==1)
+t44 <- subset(sede44,EMP_PPAL==1)
+t45 <- subset(sede45,EMP_PPAL==1)
+t46 <- subset(sede46,EMP_PPAL==1)
+t47 <- subset(sede47,EMP_PPAL==1)
+t48 <- subset(sede48,EMP_PPAL==1)
+t49 <- subset(sede49,EMP_PPAL==1)
+t50 <- subset(sede50,EMP_PPAL==1)
+t51 <- subset(sede51,EMP_PPAL==1)
+
+################################################################################################
+til <- (length(t(t)[1,])/length(t(pea)[1,]))*100
+til1 <- (length(t(t1)[1,])/length(t(pea1)[1,]))*100
+til2 <- (length(t(t2)[1,])/length(t(pea2)[1,]))*100
+til3 <- (length(t(t3)[1,])/length(t(pea3)[1,]))*100
+til4 <- (length(t(t4)[1,])/length(t(pea4)[1,]))*100
+til5 <- (length(t(t5)[1,])/length(t(pea5)[1,]))*100
+til6 <- (length(t(t6)[1,])/length(t(pea6)[1,]))*100
+til7 <- (length(t(t7)[1,])/length(t(pea7)[1,]))*100
+til8 <- (length(t(t8)[1,])/length(t(pea8)[1,]))*100
+til9 <- (length(t(t9)[1,])/length(t(pea9)[1,]))*100
+til10 <- (length(t(t10)[1,])/length(t(pea10)[1,]))*100
+til11 <- (length(t(t11)[1,])/length(t(pea11)[1,]))*100
+til12 <- (length(t(t12)[1,])/length(t(pea12)[1,]))*100
+til13 <- (length(t(t13)[1,])/length(t(pea13)[1,]))*100
+til14 <- (length(t(t14)[1,])/length(t(pea14)[1,]))*100
+til15 <- (length(t(t15)[1,])/length(t(pea15)[1,]))*100
+til16 <- (length(t(t16)[1,])/length(t(pea16)[1,]))*100
+til17 <- (length(t(t17)[1,])/length(t(pea17)[1,]))*100
+til18 <- (length(t(t18)[1,])/length(t(pea18)[1,]))*100
+til19 <- (length(t(t19)[1,])/length(t(pea19)[1,]))*100
+til20 <- (length(t(t20)[1,])/length(t(pea20)[1,]))*100
+til21 <- (length(t(t21)[1,])/length(t(pea21)[1,]))*100
+til22 <- (length(t(t22)[1,])/length(t(pea22)[1,]))*100
+til23 <- (length(t(t23)[1,])/length(t(pea23)[1,]))*100
+til24 <- (length(t(t24)[1,])/length(t(pea24)[1,]))*100
+til25 <- (length(t(t25)[1,])/length(t(pea25)[1,]))*100
+til26 <- (length(t(t26)[1,])/length(t(pea26)[1,]))*100
+til27 <- (length(t(t27)[1,])/length(t(pea27)[1,]))*100
+til28 <- (length(t(t28)[1,])/length(t(pea28)[1,]))*100
+til29 <- (length(t(t29)[1,])/length(t(pea29)[1,]))*100
+til30 <- (length(t(t30)[1,])/length(t(pea30)[1,]))*100
+til31 <- (length(t(t31)[1,])/length(t(pea31)[1,]))*100
+til32 <- (length(t(t32)[1,])/length(t(pea32)[1,]))*100
+til33 <- (length(t(t33)[1,])/length(t(pea33)[1,]))*100
+til34 <- (length(t(t34)[1,])/length(t(pea34)[1,]))*100
+til35 <- (length(t(t35)[1,])/length(t(pea35)[1,]))*100
+til36 <- (length(t(t36)[1,])/length(t(pea36)[1,]))*100
+til37 <- (length(t(t37)[1,])/length(t(pea37)[1,]))*100
+til38 <- (length(t(t38)[1,])/length(t(pea38)[1,]))*100
+til39 <- (length(t(t39)[1,])/length(t(pea39)[1,]))*100
+til40 <- (length(t(t40)[1,])/length(t(pea40)[1,]))*100
+til41 <- (length(t(t41)[1,])/length(t(pea41)[1,]))*100
+til42 <- (length(t(t42)[1,])/length(t(pea42)[1,]))*100
+til43 <- (length(t(t43)[1,])/length(t(pea43)[1,]))*100
+til44 <- (length(t(t44)[1,])/length(t(pea44)[1,]))*100
+til45 <- (length(t(t45)[1,])/length(t(pea45)[1,]))*100
+til46 <- (length(t(t46)[1,])/length(t(pea46)[1,]))*100
+til47 <- (length(t(t47)[1,])/length(t(pea47)[1,]))*100
+til48 <- (length(t(t48)[1,])/length(t(pea48)[1,]))*100
+til49 <- (length(t(t49)[1,])/length(t(pea49)[1,]))*100
+til50 <- (length(t(t50)[1,])/length(t(pea50)[1,]))*100
+til51 <- (length(t(t51)[1,])/length(t(pea51)[1,]))*100
+serietil <-data.frame(til,til1,til2,til3,til4,til5,til6,til7,til8,til9,
+                      til10,til11,til12,til13,til14,til15,til16,til17,til18,til19,
+                      til20,til21,til22,til23,til24,til25,til26,til27,til28,til29,
+                      til30,til31,til32,til33,til34,til35,til36,til37,til38,til39,
+                      til40,til41,til42,til43,til44,til45,til46,til47,til48,til49,
+                      til50,til51)
+#########################################################################################3
