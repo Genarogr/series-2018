@@ -1,0 +1,21 @@
+
+pib<-read.csv("file:///C:/Users/USUARIO/Pictures/g/PI.csv", header = F)
+pibt <- ts(pib,start = 1960,frequency = 1)
+require(fpp)
+mod1 <- ses(pibt,initial = "simple",alpha=0.1,h=5)
+mod1$fitted
+x11()
+plot(mod1)
+lines(mod1$fitted)
+######################################################
+plot(pibt)
+## aplha que le de mas peso a los ultimos 
+#
+mod2 <- holt(pibt, alpha = 0.8,beta = 0.5, initial = "simple",h=5)
+
+x11()
+plot(mod1)
+lines(mod1$fitted,col="green")
+lines(mod2$fitted,col="blue")
+lines(mod1$mean,col="green")
+lines(mod2$mean,col="blue")
