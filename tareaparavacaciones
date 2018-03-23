@@ -1,10 +1,14 @@
-## ejercicio
+## ejercicio beta cercano a cero o uno depende la tendencia si es hacia abajo es cercana a 0 y hacia arriba 1
 # elijan una st con tendencia y realizar 3 graficas aplicando todos los modelos
-# 1 con valores ajustados
-# con pronosticos
-# 3 ajustados y pronosticos
+# 1 con valores ajustados # grafica con los datos y con los valores
+# 2 con pronosticos #grafica con los pronosticos solo
+# 3 ajustados y pronosticos # grafica con pronosticos y valores
 # Analicen y justufiquen con que modelo se quedadn
 # SES,holt,h-exponencial aditivo amortiguado, multi amortiguado
 ##################################################################
 # tarea
 # esta misma serie la cortan 4 o 5 peridos antes de la ultima  observacion y grafican ajustados y pronosticos
+###grafica 1 funcion fitted
+# tener serie hasta el 2015 y desaparecer hasta el 2010 
+# y pronosticar hasta el 2015 para ver cual ajustado se acerca mas a los 5 periodos cortados (ajustados o pronosticos)
+# grafica 2 graficar el mejor modelo solo
