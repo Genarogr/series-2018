@@ -1,0 +1,10 @@
+## ejercicio
+# elijan una st con tendencia y realizar 3 graficas aplicando todos los modelos
+# 1 con valores ajustados
+# con pronosticos
+# 3 ajustados y pronosticos
+# Analicen y justufiquen con que modelo se quedadn
+# SES,holt,h-exponencial aditivo amortiguado, multi amortiguado
+##################################################################
+# tarea
+# esta misma serie la cortan 4 o 5 peridos antes de la ultima  observacion y grafican ajustados y pronosticos
