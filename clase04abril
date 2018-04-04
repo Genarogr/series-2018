@@ -1,0 +1,11 @@
+AirPassengers
+x11()
+plot(AirPassengers)
+
+
+x11()
+plot(diff(log(AirPassengers)))
+## log convertir en estacionaria
+# diferenciacion se aplica con diff
+# para que sea estacionaria se aplica esto
+## se puede aplicar modelos menos lineales como los pronosticos 
