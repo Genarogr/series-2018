@@ -1,0 +1,36 @@
+pib<-read.csv("file:///C:/Users/USUARIO/Pictures/g/PI.csv")
+View(pib)
+pibt <- ts(pib,start = 1961,frequency = 1)
+require(fpp)
+mod1 <- auto.arima(pibt, seasonal = F)
+mod1
+# resultados del modelo arima
+####### p= 0, d=1, q=2 
+# el orden es q en este caso 2 
+# diferenciacion=d=1
+# autocorre =0 =p 
+# teta 1 =-.6521
+# teta 2 =-.2041
+##############
+## hacer el pronostico 
+#######
+x11()
+plot(forecast(mod1,h=10))
+########################################################
+#apple
+apple<-read.csv("file:///C:/Users/USUARIO/Pictures/g/AAPL.MX.csv")
+View(pib)
+applet <- ts(apple,start = 2017,frequency = 252)
+require(fpp)
+mod2 <- auto.arima(applet, seasonal = F)
+mod2
+### el resultado nos dice que el ejercicio no es propio para el modelo arima
+
+#asa
+asa<-read.csv("file:///C:/Users/USUARIO/Pictures/g/tasa asa.csv")
+View(asa)
+asat <- ts(asa,start = 2005,frequency = 4)
+require(fpp)
+mod3 <- auto.arima(applet, seasonal = F)
+mod3
+### el resultado nos dice que el ejercicio no es propio para el modelo arima
