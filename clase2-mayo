@@ -1,0 +1,153 @@
+bimbo<-read.csv("file:///C:/Users/USUARIO/Pictures/g/BIMBOA.MX.csv")[,5]
+View(bimbo)
+require(fpp)
+bimbot <- ts(bimbo,start = 2017,frequency = 252)
+# VAMOS A REVISAR SI LA SERIE ES ESTACIONARIA
+## ESO LO HACEMOS CON EL adf.test
+adf.test(bimbot)
+# prueba de raiz unitaria 
+# no es estacionaria
+# p- value menor a 0.5
+# sin embargo la serie bimbot obtenemos un p-value de 0.08
+# por lo que hay que aplicar una diferenciacion 
+# para convertir la serie en estacionaria ...
+dbimbot <- diff(bimbot)
+## dierencia entre los datos 
+# volvemos a aplicar la prueba para ver si es estacionaria
+adf.test(dbimbot)
+## ya tenemos una serie estacionaria ya que el p-value es menor a .05
+# podemos aplicar el modelo arima, por lo que hay que elegir los valores de p.d y q
+# para elegir los valores de p y q
+# se utiliza la funcion de autocorrelacion(acf) y la funcion de autocorrelacion parcial (pacf)
+# primero aplicamos la funcion de autocorrelacion para elegir el valor de q
+x11()
+acf(dbimbot)
+# una vez que apliquemos el acf vamos a observar la grafica y ver cuantas lineas sobrepasan 
+# el margen y el numero de lineas son el valor de q
+# siempre el primer valor va a sobrepasar la linea pero no cuenta 
+
+x11()
+pacf(dbimbot)
+# ningun dato sobrepasa la linea
+# lo que se propone es
+mod1bim <- arima(bimbot, order=c(0,1,0))
+mod1bim
+# tres criterios de informacion
+# bayesiano
+# aic 
+#AIcc el menor valor de aicc vamos a elegir
+mod2bim <-arima(bimbot, order=c(1,1,2))
+mod2bim
+
+mod3bim <-arima(bimbot, order=c(3,1,2))
+mod3bim
+
+# segun el criterio de aic nos quedarmos con el segundo model
+mod4bim <-arima(bimbot, order=c(2,1,2))
+mod4bim
+# elegimos el mod4bim
+mod4< forecast(mod4bim,h=12)
+x11()
+plot(forecast(mod4bim,h=12),include = 45)
+# mayor vizualisacion al pronostico 18 datos =include
+mod5bim <- auto.arima(bimbot)
+mod5bim
+x11()
+plot(forecast(mod5bim,h=12),include = 45)
+
+
+
+
+AirPassengers
+
+################ elegir dos series de tiempo diferentes
+# a las que hemos visto en clase y repetir el procedimiento
+# para elegir un modelo arima "mejor" segun los criterios AICc y 
+# compararlos con el modelo auto.arima
+library(help="datasets")
+a<-AirPassengers
+help("AirPassengers")
+View(a)
+require(fpp)
+at <- ts(a,start = 1949,frequency = 12)
+
+
+adf.test(at)
+################################
+dat <- diff(at)
+###################
+adf.test(dat)
+#################################
+x11()
+acf(dat)
+##############################
+x11()
+pacf(dat)
+###################################
+
+mod1a <- arima(at, order=c(11,1,6))
+mod1a
+##################################
+mod2a <-arima(at, order=c(10,1,2))
+mod2a
+#################################
+mod3a <-arima(at, order=c(3,1,2))
+mod3a
+#########################
+mod4a <-arima(at, order=c(2,1,2))
+mod4a
+##################################
+
+x11()
+plot(forecast(mod4a,h=12),include = 45)
+
+mod5a <- auto.arima(at)
+mod5a
+### mejor aic es el del auto.arima
+x11()
+plot(forecast(mod5a,h=12),include = 45)
+
+
+################################################################################
+a<-nottem
+help("nottem")
+View(a)
+require(fpp)
+at <- ts(a,start = 1920,frequency = 12)
+######################################
+
+adf.test(at)
+########################
+
+dat <- diff(at)
+#############################
+adf.test(dat)
+#################################
+x11()
+acf(dat)
+###################
+x11()
+pacf(dat)
+#
+mod1a <- arima(at, order=c(19,1,8))
+mod1a
+###########################
+mod2a <-arima(at, order=c(15,1,2))
+mod2a
+###################################
+mod3a <-arima(at, order=c(3,1,2))
+mod3a
+###################################
+mod4a <-arima(at, order=c(2,1,2))
+mod4a
+######################################
+mod4< forecast(mod4a,h=12)
+x11()
+plot(forecast(mod4a,h=12),include = 45)
+######################################
+mod5a <- auto.arima(at)
+mod5a
+####################################
+### mejor aic es el del modelo 3
+x11()
+plot(forecast(mod3a,h=12),include = 45)
