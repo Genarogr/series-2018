@@ -1,0 +1,41 @@
+require(fpp)
+memory.size(50000)
+plot(euretail)
+########3 nos muestra 3 graficas para mostrar las lineas que sobrepasan 
+tsdisplay(diff(euretail,4))
+# aplicamos otra difenciacion para que sea mas estacional los datos 
+tsdisplay(diff(diff(euretail,4)))
+## 4 por que es trimestral 
+# con esto se puede observar a grandes rasgos una serie con rasgos
+# mas similares a una serie estacionaria por lo que ahora hay que encontrar un modelo arima mas apropiado
+# basados en el ACF y PACF el primer rezago o valor que se observa en el ACF y que sobrepasa
+# ligeramente la frontera podria sugerir un componente MA(1), MA = medias moviles
+# POR LO QUE PODRIAMOS INICIAR CON UN ARIMA (0,1,1)(0,1,1)4
+##
+mod <- arima(euretail, order = c(0,1,1),seasonal = c(0,1,1)# componente estacional)
+## observar los residuales 
+## graficar los residuales del modelo y correlogramas
+# con los residuales el componente no estacional vamos a definir
+tsdisplay(residuals(mod))
+# una vez que se tiene una primera propuesta de modelo arima
+# tienen que observar los residuales de este modelo y observar
+# los valores de ACF y PACF de los residuales muestran valores significativos en el rezago 2 y casi signifacivos en el 
+# rezago 3, lo que indica que pueden ser agregados algunos componentes no estacionales en el modelo 
+# por ejemplo 
+# Arima (0,1,2)(0,1,1)4 Y (0,1,3)(0,1,1)4
+# movemos el componente no estacional en el MA cambiando a 2 y 3
+# con estos modelos propuestos se aplicar R se observa el AICC mejor para elegir que modelo predecir
+# una vez que se elige modelo con base en el AICC como ultimo paso 
+# hay que obtener los residuales y garantixar que sean ruidos blanco con la prueba 
+# Box.test(residuals(mod3),lag = 16, fitdf = 4,type = "Ljung-Box")
+### hacmos los modelos propuestos
+mod2 <- arima(euretail,order = c(0,1,2),seasonal = c(0,1,1))
+mod3 <- arima(euretail,order = c(0,1,3),seasonal = c(0,1,1))
+mod2
+mod3
+# en este caso el mod3 tiene un aic menor por lo que es mejor modelo 
+box.test(res,lag=16, fitdf=4, type="ljung")
+Box.test(residuals(mod3),lag = 16, fitdf = 4,type = "Ljung-Box")
+# lo que buscamos es que el p-value sea > 0.05
+# en este caso es mayor a 0.05
+# fitdf estacional
