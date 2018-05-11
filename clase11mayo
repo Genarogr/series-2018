@@ -1,0 +1,280 @@
+# ejercicio
+# 1) bajar sere historica del salario minimo y la inflacion y realizar pronostico ocn un modelo
+# holt lineal y arima no estaional
+# 2) de dos series estacionales (las que sean)
+# aplicar los modelos arima estacional y pronosticar estas series
+# procedimiento para modelos
+# ARIMA ESTACIONALES
+  # identificar la serie de tiempo estacional 
+# una vez que se identifica como estacional hay que garantixar que la serie
+# sea estacionaria a traves de una revision grafica 
+# y con la prueba ad.test ..... esperamos un valor de p-value menor a 0.05
+# una vez que se tiene la serie estacionaria, se tiene que proponer
+# los valores de p y q del modelo arima por lo que hay que observar las graficas de ACF y PACF
+# con estas graficas se hace propuesta similar para el modelo arima
+# de los valores de p y q , P ,Q, .... es decir la primera propuesta de arima estacional los valores de p es igual P
+#y los valores de q son igual a Q
+# ya con un primer modelo arima estacional ahora hay que proponer valores para p y q
+# que son los datos de la parte no estacional y estos valores
+# se hacen a traves de las graficas ACF(q) y PACF(p)
+# ya qye se tienen estos y se elegie el mejor modelo arima
+# se realiza el pronostico
+
+
+salario <- read.csv("C:/Users/USUARIO/Pictures/g/salario.csv")[1]
+View(salario)
+salariots <- ts(salario,start = 1964,frequency = 12)
+# VAMOS A REVISAR SI LA SERIE ES ESTACIONARIA
+## ESO LO HACEMOS CON EL adf.test
+adf.test(salariots)
+# prueba de raiz unitaria 
+# no es estacionaria
+# p- value menor a 0.5
+# sin embargo la serie bimbot obtenemos un p-value de 0.08
+# por lo que hay que aplicar una diferenciacion 
+# para convertir la serie en estacionaria ...
+dsalaraiots <- diff(salariots)
+## dierencia entre los datos 
+# volvemos a aplicar la prueba para ver si es estacionaria
+adf.test(dsalaraiots)
+# primero aplicamos la funcion de autocorrelacion para elegir el valor de q
+x11()
+acf(dsalaraiots)
+
+# una vez que apliquemos el acf vamos a observar la grafica y ver cuantas lineas sobrepasan 
+# el margen y el numero de lineas son el valor de q
+# siempre el primer valor va a sobrepasar la linea pero no cuenta 
+
+x11()
+pacf(dsalaraiots)
+# ningun dato sobrepasa la linea
+# lo que se propone es
+mod1bim <- arima(dsalaraiots, order=c(1,1,2))
+mod1bim
+# tres criterios de informacion
+# bayesiano
+# aic 
+#AIcc el menor valor de aicc vamos a elegir
+mod2bim <-arima(dsalaraiots, order=c(0,0,2))
+mod2bim
+
+mod3bim <-arima(dsalaraiots, order=c(3,1,3))
+mod3bim
+
+
+mod4bim <-arima(dsalaraiots, order=c(1,0,1))
+mod4bim
+
+# segun el criterio de aic nos quedarmos con el tercer modelo model
+
+# elegimos el mod3bim
+mod4< forecast(mod3bim,h=42)
+x11()
+plot(forecast(mod4bim,h=12),include = 45)
+# mayor vizualisacion al pronostico 18 datos =include
+mod5bim <- auto.arima(salariots)
+mod5bim
+x11()
+plot(forecast(mod5bim,h=12),include = 45)
+######################################################
+plot(salariots)
+## aplha que le de mas peso a los ultimos 
+#
+mod2 <- holt(salariots, alpha = 0.8,beta = 0.5, initial = "simple",h=5)
+x11()
+plot(mod2)
+lines(mod2$fitted,col="blue")
+##################################################################################
+###########################################################################
+########################################################################
+inflacion <- read.csv("C:/Users/USUARIO/Pictures/g/inflacion.csv")
+View(inflacion)
+inflacionts <- ts(inflacion,start = 1969,frequency = 12)
+# VAMOS A REVISAR SI LA SERIE ES ESTACIONARIA
+## ESO LO HACEMOS CON EL adf.test
+adf.test(inflacionts)
+# prueba de raiz unitaria 
+# no es estacionaria
+# p- value menor a 0.5
+# sin embargo la serie bimbot obtenemos un p-value de 0.08
+# por lo que hay que aplicar una diferenciacion 
+# para convertir la serie en estacionaria ...
+dinflacionts <- diff(inflacionts)
+## dierencia entre los datos 
+# volvemos a aplicar la prueba para ver si es estacionaria
+adf.test(dinflacionts)
+# primero aplicamos la funcion de autocorrelacion para elegir el valor de q
+x11()
+acf(dinflacionts)
+
+# una vez que apliquemos el acf vamos a observar la grafica y ver cuantas lineas sobrepasan 
+# el margen y el numero de lineas son el valor de q
+# siempre el primer valor va a sobrepasar la linea pero no cuenta 
+
+x11()
+pacf(dinflacionts)
+# ningun dato sobrepasa la linea
+# lo que se propone es
+mod1bim <- arima(inflacionts, order=c(3,1,10))
+mod1bim
+# tres criterios de informacion
+# bayesiano
+# aic 
+#AIcc el menor valor de aicc vamos a elegir
+mod2bim <-arima(dinflacionts, order=c(4,1,5))
+mod2bim
+
+mod3bim <-arima(dinflacionts, order=c(3,1,12))
+mod3bim
+
+
+mod4bim <-arima(dinflacionts, order=c(1,0,1))
+mod4bim
+
+# segun el criterio de aic nos quedarmos con el tercer modelo model
+
+# elegimos el mod3bim
+mod4< forecast(mod3bim,h=42)
+x11()
+plot(forecast(mod4bim,h=12),include = 45)
+# mayor vizualisacion al pronostico 18 datos =include
+mod5bim <- auto.arima(inflacionts)
+mod5bim
+x11()
+plot(forecast(mod5bim,h=12),include = 45)
+######################################################
+plot(inflacionts)
+## aplha que le de mas peso a los ultimos 
+#
+mod2 <- holt(inflacionts, alpha = 0.8,beta = 0.5, initial = "simple",h=5)
+x11()
+plot(mod2)
+lines(mod2$fitted,col="blue")
+################################################
+############################################
+# inflacion
+inflacion <- read.csv("C:/Users/USUARIO/Pictures/g/inflacion.csv")
+View(inflacion)
+inflacionts <- ts(inflacion,start = 1969,frequency = 12)
+# VAMOS A REVISAR SI LA SERIE ES ESTACIONARIA
+## ESO LO HACEMOS CON EL adf.test
+adf.test(inflacionts)
+aa <- auto.arima(inflacionts)
+bb <- hw(inflacionts,h=12)
+x11()
+plot(forecast(aa,h=12))
+
+x11()
+plot(forecast(bb))
+# el mejor modelo que pronostica es el autoarima
+inflacion <- read.csv("C:/Users/USUARIO/Pictures/g/inflacion.csv")
+View(inflacion)
+inflacionts <- ts(inflacion,start = 1969,frequency = 12)
+# VAMOS A REVISAR SI LA SERIE ES ESTACIONARIA
+## ESO LO HACEMOS CON EL adf.test
+adf.test(inflacionts)
+# prueba de raiz unitaria 
+# no es estacionaria
+# p- value menor a 0.5
+# sin embargo la serie bimbot obtenemos un p-value de 0.08
+# por lo que hay que aplicar una diferenciacion 
+# para convertir la serie en estacionaria ...
+dinflacionts <- diff(inflacionts)
+## dierencia entre los datos 
+# volvemos a aplicar la prueba para ver si es estacionaria
+adf.test(dinflacionts)
+# primero aplicamos la funcion de autocorrelacion para elegir el valor de q
+x11()
+acf(dinflacionts)
+
+# una vez que apliquemos el acf vamos a observar la grafica y ver cuantas lineas sobrepasan 
+# el margen y el numero de lineas son el valor de q
+# siempre el primer valor va a sobrepasar la linea pero no cuenta 
+
+x11()
+pacf(dinflacionts)
+########3 nos muestra 3 graficas para mostrar las lineas que sobrepasan 
+tsdisplay(diff(dinflacionts,4))
+# aplicamos otra difenciacion para que sea mas estacional los datos 
+tsdisplay(diff(diff(euretail,4)))
+## 4 por que es trimestral 
+# con esto se puede observar a grandes rasgos una serie con rasgos
+# mas similares a una serie estacionaria por lo que ahora hay que encontrar un modelo arima mas apropiado
+# basados en el ACF y PACF el primer rezago o valor que se observa en el ACF y que sobrepasa
+# ligeramente la frontera podria sugerir un componente MA(1), MA = medias moviles
+# POR LO QUE PODRIAMOS INICIAR CON UN ARIMA (0,1,1)(0,1,1)4
+##
+mod <- arima(dinflacionts, order = c(1,1,1),seasonal = c(0,1,1)# componente estacional)
+## graficar los residuales del modelo y correlogramas
+# con los residuales el componente no estacional vamos a definir
+tsdisplay(residuals(mod))
+mod2 <- arima(,order = c(0,1,2),seasonal = c(0,1,1))
+mod3 <- arima(euretail,order = c(0,1,3),seasonal = c(0,1,1))
+Box.test(residuals(mod3),lag = 16, fitdf = 4,type = "Ljung-Box")
+################################################
+############################################
+
+aa <- auto.arima(inflacionts)
+bb <- hw(inflacionts,h=12)
+x11()
+plot(forecast(aa,h=12))
+
+x11()
+plot(forecast(bb))
+# el mejor modelo que pronostica es el autoarima
+######################################################################
+inflacion <- read.csv("C:/Users/USUARIO/Pictures/g/inflacion.csv")
+View(inflacion)
+inflacionts <- ts(inflacion,start = 1969,frequency = 12)
+# VAMOS A REVISAR SI LA SERIE ES ESTACIONARIA
+## ESO LO HACEMOS CON EL adf.test
+adf.test(inflacionts)
+# prueba de raiz unitaria 
+# no es estacionaria
+# p- value menor a 0.5
+# sin embargo la serie bimbot obtenemos un p-value de 0.08
+# por lo que hay que aplicar una diferenciacion 
+# para convertir la serie en estacionaria ...
+dinflacionts <- diff(inflacionts)
+## dierencia entre los datos 
+# volvemos a aplicar la prueba para ver si es estacionaria
+adf.test(dinflacionts)
+# primero aplicamos la funcion de autocorrelacion para elegir el valor de q
+x11()
+acf(dinflacionts)
+
+# una vez que apliquemos el acf vamos a observar la grafica y ver cuantas lineas sobrepasan 
+# el margen y el numero de lineas son el valor de q
+# siempre el primer valor va a sobrepasar la linea pero no cuenta 
+
+x11()
+pacf(dinflacionts)
+########3 nos muestra 3 graficas para mostrar las lineas que sobrepasan 
+tsdisplay(diff(dinflacionts,4))
+# aplicamos otra difenciacion para que sea mas estacional los datos 
+tsdisplay(diff(diff(euretail,4)))
+## 4 por que es trimestral 
+# con esto se puede observar a grandes rasgos una serie con rasgos
+# mas similares a una serie estacionaria por lo que ahora hay que encontrar un modelo arima mas apropiado
+# basados en el ACF y PACF el primer rezago o valor que se observa en el ACF y que sobrepasa
+# ligeramente la frontera podria sugerir un componente MA(1), MA = medias moviles
+# POR LO QUE PODRIAMOS INICIAR CON UN ARIMA (0,1,1)(0,1,1)4
+##
+mod <- arima(dinflacionts, order = c(1,1,1),seasonal = c(0,1,1)# componente estacional)
+             ## graficar los residuales del modelo y correlogramas
+             # con los residuales el componente no estacional vamos a definir
+             tsdisplay(residuals(mod))
+             mod2 <- arima(,order = c(0,1,2),seasonal = c(0,1,1))
+             mod3 <- arima(euretail,order = c(0,1,3),seasonal = c(0,1,1))
+             Box.test(residuals(mod3),lag = 16, fitdf = 4,type = "Ljung-Box")
+             ################################################
+             ############################################
+             
+             aa <- auto.arima(inflacionts)
+             bb <- hw(inflacionts,h=12)
+             x11()
+             plot(forecast(aa,h=12))
+             
+             x11()
+             plot(forecast(bb))
+             # el mejor modelo que pronostica es el autoarima
