@@ -1,0 +1,286 @@
+# ejercicio
+#bajar la accion aeromexico
+# y proponer un arima (1,0,0) es decir un modelo autoregresivo y plantearlo con base en la ecuacion de modelos arima
+# despues proponer un arima(2,0,0) y plantearlo en la ecuacion 
+# ahora para un modelo arima (0,0,1) es decir un modelo 
+# MA (1) y plantearlo en la ecuacion
+# ahora con un arima (0,0,2) es decir MA(2)
+########
+# para las siguientes series encuentran la transformacion o diferenciacion
+#para convertirla en estacionaria
+# a traves de las graficas y el adf.test y ademas proponer modelos arima 
+# que ajusten a la series y confirmen que los residuales sean ruido blanco
+# require(fpp)
+# usnetelec
+# usgdp
+#mcopper
+# enplanements
+# visitors
+aero<-read.csv("C:/Users/USUARIO/Pictures/g/AEROMEX.MX.csv")
+require(fpp)
+aerot <- ts(aero,start = 2017,frequency = 252)
+## autorregresivo de orden 1 con i=0 medias moviles=0
+
+mod1aero <- Arima(aerot, order=c(1,0,0))
+mod1aero
+#Yt=  .9883Yt-1 +e
+mod2aero <- Arima(aerot, order=c(2,0,0))
+mod2aero
+# Yt= .9941Yt-1 + .0043 Yt-2 +e 
+mod3aero <- Arima(aerot, order=c(0,0,1))
+mod3aero
+# Yt= .9678T-1 +e 
+mod4aero <- Arima(aerot, order=c(0,0,2))
+mod4aero
+# Yt= 1.5367T-1 + .802 T-2+ e
+
+#################################################################
+help("usnetelec")
+a <-usnetelec
+a
+plot(usnetelec)
+adf.test(usnetelec)
+########3 nos muestra 3 graficas para mostrar las lineas que sobrepasan 
+a <-diff(usnetelec)
+
+# aplicamos otra difenciacion para que sea mas estacional los datos 
+tsdisplay(diff(diff(usnetelec,1)))
+adf.test(b)
+b <-diff(diff(usnetelec))
+##
+# con esto se puede observar a grandes rasgos una serie con rasgos
+# mas similares a una serie estacionaria por lo que ahora hay que encontrar un modelo arima mas apropiado
+# basados en el ACF y PACF el primer rezago o valor que se observa en el ACF y que sobrepasa
+# ligeramente la frontera podria sugerir un componente MA(1), MA = medias moviles
+# POR LO QUE PODRIAMOS INICIAR CON UN ARIMA (0,1,1)(0,1,1)1
+##
+mod <- arima(usnetelec, order = c(0,1,1),seasonal = c(0,1,1))# componente estacional)
+             ## observar los residuales 
+             ## graficar los residuales del modelo y correlogramas
+             # con los residuales el componente no estacional vamos a definir
+             tsdisplay(residuals(mod))
+             # una vez que se tiene una primera propuesta de modelo arima
+             # tienen que observar los residuales de este modelo y observar
+             # los valores de ACF y PACF de los residuales muestran valores significativos en el rezago 2 y casi signifacivos en el 
+             # rezago 3, lo que indica que pueden ser agregados algunos componentes no estacionales en el modelo 
+             # por ejemplo 
+             # Arima (0,1,2)(0,1,1)4 Y (0,1,3)(0,1,1)4
+             # movemos el componente no estacional en el MA cambiando a 2 y 3
+             # con estos modelos propuestos se aplicar R se observa el AICC mejor para elegir que modelo predecir
+             # una vez que se elige modelo con base en el AICC como ultimo paso 
+             # hay que obtener los residuales y garantixar que sean ruidos blanco con la prueba 
+             # Box.test(residuals(mod3),lag = 16, fitdf = 4,type = "Ljung-Box")
+             ### hacmos los modelos propuestos
+             mod2 <- arima(usnetelec,order = c(0,1,1),seasonal = c(0,1,1))
+             mod3 <- arima(usnetelec,order = c(0,1,2),seasonal = c(0,1,1))
+             mod2
+             mod3
+             # en este caso el mod3 tiene un aic menor por lo que es mejor modelo 
+             #box.test(res,lag=16, fitdf=4, type="ljung")
+             Box.test(residuals(mod2),lag = 16, fitdf = 1,type = "Ljung-Box")
+             # lo que buscamos es que el p-value sea > 0.05
+             # en este caso es mayor a 0.05
+             # fitdf estacional
+#####################################################################################
+             help("usgdp")
+             plot(usgdp)
+             usgdp
+             ########3 nos muestra 3 graficas para mostrar las lineas que sobrepasan 
+             a <-diff(usgdp)
+             
+             # aplicamos otra difenciacion para que sea mas estacional los datos 
+             tsdisplay(diff(diff(usgdp,1)))
+             adf.test(a)
+             
+             ########3 nos muestra 3 graficas para mostrar las lineas que sobrepasan 
+             tsdisplay(diff(usgdp,4))
+             # aplicamos otra difenciacion para que sea mas estacional los datos 
+             tsdisplay(diff(diff(usgdp,4)))
+             tsdisplay(diff(diff(diff(usgdp,4))))
+             ## 4 por que es trimestral 
+             # con esto se puede observar a grandes rasgos una serie con rasgos
+             # mas similares a una serie estacionaria por lo que ahora hay que encontrar un modelo arima mas apropiado
+             # basados en el ACF y PACF el primer rezago o valor que se observa en el ACF y que sobrepasa
+             # ligeramente la frontera podria sugerir un componente MA(1), MA = medias moviles
+             # POR LO QUE PODRIAMOS INICIAR CON UN ARIMA (0,1,1)(0,1,1)4
+             ##
+             mod <- arima(usgdp, order = c(0,1,1),seasonal = c(0,1,1))# componente estacional)
+             ## observar los residuales 
+             ## graficar los residuales del modelo y correlogramas
+             # con los residuales el componente no estacional vamos a definir
+             tsdisplay(residuals(mod))
+             # una vez que se tiene una primera propuesta de modelo arima
+             # tienen que observar los residuales de este modelo y observar
+             # los valores de ACF y PACF de los residuales muestran valores significativos en el rezago 2 y casi signifacivos en el 
+             # rezago 3, lo que indica que pueden ser agregados algunos componentes no estacionales en el modelo 
+             # por ejemplo 
+             # Arima (0,1,2)(0,1,1)4 Y (0,1,3)(0,1,1)4
+             # movemos el componente no estacional en el MA cambiando a 2 y 3
+             # con estos modelos propuestos se aplicar R se observa el AICC mejor para elegir que modelo predecir
+             # una vez que se elige modelo con base en el AICC como ultimo paso 
+             # hay que obtener los residuales y garantixar que sean ruidos blanco con la prueba 
+             # Box.test(residuals(mod3),lag = 16, fitdf = 4,type = "Ljung-Box")
+             ### hacmos los modelos propuestos
+             mod2 <- arima(usgdp,order = c(0,1,4),seasonal = c(0,1,6))
+             mod3 <- arima(usgdp,order = c(0,1,5),seasonal = c(0,1,2))
+             mod2
+             mod3
+             # en este caso el mod3 tiene un aic menor por lo que es mejor modelo 
+             #box.test(res,lag=16, fitdf=4, type="ljung")
+             Box.test(residuals(mod2),lag = 16, fitdf = 4,type = "Ljung-Box")
+             # lo que buscamos es que el p-value sea > 0.05
+             # en este caso es mayor a 0.05
+             # fitdf estacional
+             #####################################################################################
+             help("mcopper")
+             plot(mcopper)
+             mcopper
+             adf.test(mcopper)
+             ########3 nos muestra 3 graficas para mostrar las lineas que sobrepasan 
+             a <-diff(mcopper)
+             
+             # aplicamos otra difenciacion para que sea mas estacional los datos 
+             tsdisplay(diff(diff(mcopper,1)))
+             adf.test(a)
+             b <-diff(diff(mcopper))
+             ########3 nos muestra 3 graficas para mostrar las lineas que sobrepasan 
+             tsdisplay(diff(mcopper,12))
+             # aplicamos otra difenciacion para que sea mas estacional los datos 
+             tsdisplay(diff(diff(mcopper,12)))
+             tsdisplay(diff(diff(diff(mcopper,12))))
+             ## 4 por que es trimestral 
+             # con esto se puede observar a grandes rasgos una serie con rasgos
+             # mas similares a una serie estacionaria por lo que ahora hay que encontrar un modelo arima mas apropiado
+             # basados en el ACF y PACF el primer rezago o valor que se observa en el ACF y que sobrepasa
+             # ligeramente la frontera podria sugerir un componente MA(1), MA = medias moviles
+             # POR LO QUE PODRIAMOS INICIAR CON UN ARIMA (0,1,1)(0,1,1)12
+             ##
+             mod <- arima(mcopper, order = c(0,1,12),seasonal = c(0,1,10))# componente estacional)
+             ## observar los residuales 
+             ## graficar los residuales del modelo y correlogramas
+             # con los residuales el componente no estacional vamos a definir
+             tsdisplay(residuals(mod))
+             # una vez que se tiene una primera propuesta de modelo arima
+             # tienen que observar los residuales de este modelo y observar
+             # los valores de ACF y PACF de los residuales muestran valores significativos en el rezago 2 y casi signifacivos en el 
+             # rezago 3, lo que indica que pueden ser agregados algunos componentes no estacionales en el modelo 
+             # por ejemplo 
+             # Arima (0,1,2)(0,1,1)4 Y (0,1,3)(0,1,1)12
+             # movemos el componente no estacional en el MA cambiando a 2 y 3
+             # con estos modelos propuestos se aplicar R se observa el AICC mejor para elegir que modelo predecir
+             # una vez que se elige modelo con base en el AICC como ultimo paso 
+             # hay que obtener los residuales y garantixar que sean ruidos blanco con la prueba 
+             # Box.test(residuals(mod3),lag = 16, fitdf = 12,type = "Ljung-Box")
+             ### hacmos los modelos propuestos
+             mod2 <- arima(mcopper,order = c(0,1,4),seasonal = c(0,1,6))
+             mod3 <- arima(mcopper,order = c(0,1,5),seasonal = c(0,1,2))
+             mod2
+             mod3
+             # en este caso el mod3 tiene un aic menor por lo que es mejor modelo 
+             #box.test(res,lag=16, fitdf=4, type="ljung")
+             Box.test(residuals(mod2),lag = 16, fitdf = 12,type = "Ljung-Box")
+             # lo que buscamos es que el p-value sea > 0.05
+             # en este caso es mayor a 0.05
+             # fitdf estacional
+             #####################################################################################
+             help("enplanements")
+             plot(enplanements)
+             enplanements
+             adf.test(enplanements)
+             ########3 nos muestra 3 graficas para mostrar las lineas que sobrepasan 
+             a <-diff(enplanements)
+             
+             # aplicamos otra difenciacion para que sea mas estacional los datos 
+             #tsdisplay(diff(diff(enplanements,1)))
+            # adf.test(a)
+             #b <-diff(diff(enplanements))
+             ########3 nos muestra 3 graficas para mostrar las lineas que sobrepasan 
+             #tsdisplay(diff(enplanements,12))
+             # aplicamos otra difenciacion para que sea mas estacional los datos 
+            # tsdisplay(diff(diff(enplanements,12)))
+             #tsdisplay(diff(diff(diff(enplanements,12))))
+             ## 4 por que es trimestral 
+             # con esto se puede observar a grandes rasgos una serie con rasgos
+             # mas similares a una serie estacionaria por lo que ahora hay que encontrar un modelo arima mas apropiado
+             # basados en el ACF y PACF el primer rezago o valor que se observa en el ACF y que sobrepasa
+             # ligeramente la frontera podria sugerir un componente MA(1), MA = medias moviles
+             # POR LO QUE PODRIAMOS INICIAR CON UN ARIMA (0,1,1)(0,1,1)12
+             ##
+             mod <- arima(enplanements, order = c(0,1,12),seasonal = c(0,1,10))# componente estacional)
+             ## observar los residuales 
+             ## graficar los residuales del modelo y correlogramas
+             # con los residuales el componente no estacional vamos a definir
+             tsdisplay(residuals(mod))
+             # una vez que se tiene una primera propuesta de modelo arima
+             # tienen que observar los residuales de este modelo y observar
+             # los valores de ACF y PACF de los residuales muestran valores significativos en el rezago 2 y casi signifacivos en el 
+             # rezago 3, lo que indica que pueden ser agregados algunos componentes no estacionales en el modelo 
+             # por ejemplo 
+             # Arima (0,1,2)(0,1,1)4 Y (0,1,3)(0,1,1)4
+             # movemos el componente no estacional en el MA cambiando a 2 y 3
+             # con estos modelos propuestos se aplicar R se observa el AICC mejor para elegir que modelo predecir
+             # una vez que se elige modelo con base en el AICC como ultimo paso 
+             # hay que obtener los residuales y garantixar que sean ruidos blanco con la prueba 
+             # Box.test(residuals(mod3),lag = 16, fitdf = 4,type = "Ljung-Box")
+             ### hacmos los modelos propuestos
+             mod2 <- arima(enplanements,order = c(0,1,4),seasonal = c(0,1,6))
+             mod3 <- arima(enplanements,order = c(0,1,5),seasonal = c(0,1,2))
+             mod2
+             mod3
+             # en este caso el mod3 tiene un aic menor por lo que es mejor modelo 
+             #box.test(res,lag=16, fitdf=4, type="ljung")
+             Box.test(residuals(mod2),lag = 16, fitdf = 12,type = "Ljung-Box")
+             # lo que buscamos es que el p-value sea > 0.05
+             # en este caso es mayor a 0.05
+             # fitdf estacional
+             #####################################################################################
+             help("visitors")
+             plot(visitors)
+             visitors
+             adf.test(visitors)
+             ########3 nos muestra 3 graficas para mostrar las lineas que sobrepasan 
+             a <-diff(visitors)
+             
+             # aplicamos otra difenciacion para que sea mas estacional los datos 
+             #tsdisplay(diff(diff(visitors,1)))
+             # adf.test(a)
+             #b <-diff(diff(visitors))
+             ########3 nos muestra 3 graficas para mostrar las lineas que sobrepasan 
+             #tsdisplay(diff(visitors,12))
+             # aplicamos otra difenciacion para que sea mas estacional los datos 
+             # tsdisplay(diff(diff(visitors,12)))
+             #tsdisplay(diff(diff(diff(visitors,12))))
+             ## 4 por que es trimestral 
+             # con esto se puede observar a grandes rasgos una serie con rasgos
+             # mas similares a una serie estacionaria por lo que ahora hay que encontrar un modelo arima mas apropiado
+             # basados en el ACF y PACF el primer rezago o valor que se observa en el ACF y que sobrepasa
+             # ligeramente la frontera podria sugerir un componente MA(1), MA = medias moviles
+             # POR LO QUE PODRIAMOS INICIAR CON UN ARIMA (0,1,1)(0,1,1)12
+             ##
+             mod <- arima(visitors, order = c(0,1,12),seasonal = c(0,1,10))# componente estacional)
+             ## observar los residuales 
+             ## graficar los residuales del modelo y correlogramas
+             # con los residuales el componente no estacional vamos a definir
+             tsdisplay(residuals(mod))
+             # una vez que se tiene una primera propuesta de modelo arima
+             # tienen que observar los residuales de este modelo y observar
+             # los valores de ACF y PACF de los residuales muestran valores significativos en el rezago 2 y casi signifacivos en el 
+             # rezago 3, lo que indica que pueden ser agregados algunos componentes no estacionales en el modelo 
+             # por ejemplo 
+             # Arima (0,1,2)(0,1,1)4 Y (0,1,3)(0,1,1)4
+             # movemos el componente no estacional en el MA cambiando a 2 y 3
+             # con estos modelos propuestos se aplicar R se observa el AICC mejor para elegir que modelo predecir
+             # una vez que se elige modelo con base en el AICC como ultimo paso 
+             # hay que obtener los residuales y garantixar que sean ruidos blanco con la prueba 
+             # Box.test(residuals(mod3),lag = 16, fitdf = 4,type = "Ljung-Box")
+             ### hacmos los modelos propuestos
+             mod2 <- arima(visitors,order = c(0,1,4),seasonal = c(0,1,6))
+             mod3 <- arima(visitors,order = c(0,1,5),seasonal = c(0,1,2))
+             mod2
+             mod3
+             # en este caso el mod3 tiene un aic menor por lo que es mejor modelo 
+             #box.test(res,lag=16, fitdf=4, type="ljung")
+             Box.test(residuals(mod2),lag = 16, fitdf = 12,type = "Ljung-Box")
+             # lo que buscamos es que el p-value sea > 0.05
+             # en este caso es mayor a 0.05
+             # fitdf estacional
